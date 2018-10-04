@@ -1,4 +1,7 @@
 # Minesweeper
+
+![minesweeper](/docs/minesweeper.png)
+
 This is a console based minesweeper. You must uncover each tile that does not contain a mine. The board size is 10x10. You can choose how many mines you want, though I recommend 10 for easy, 15 for medium, and 20 for hard.
 
 ### Installation
