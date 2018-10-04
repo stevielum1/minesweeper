@@ -26,7 +26,7 @@ class Minesweeper
     @num_mines = num_mines
     @board = Array.new(height) { Array.new(width) {" "} }
     @hidden = {}
-    @win = false
+    @win = true
     createMines(num_mines)
     createNums
     createHidden
@@ -146,12 +146,14 @@ class Minesweeper
   def over?
     0.upto(width-1) do |i|
       0.upto(height-1) do |j|
-        return true if hidden[i.to_s + " " + j.to_s] == false && board[i][j] == "X"
-        return false if hidden[i.to_s + " " + j.to_s] && board[i][j] != "X"
+        if hidden[i.to_s + " " + j.to_s] == false && board[i][j] == "X"
+          @win = false
+          return true
+        end
       end
     end
-    @win = true
-    true
+    return true if @hidden.values.count{|x| x} == @num_mines
+    false
   end
 
   def show_adjacents(pos)
