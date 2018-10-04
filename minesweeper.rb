@@ -14,16 +14,19 @@ class Minesweeper
     "X" => :red
   }
 
-  attr_reader :width, :height, :board, :hidden, :over
+  X_COLOR = :white
+  Y_COLOR = :yellow
+
+  attr_reader :width, :height, :board, :hidden
 
   def initialize(width = 10, height = 10, num_mines = 10)
-    raise "Number of mines exceeds board size" if num_mines > width * height
+    raise "NUMBER OF MINES MUST BE BETWEEN 1 and 99" if num_mines <= 0 || num_mines >= width * height
     @width = width
     @height = height
     @num_mines = num_mines
     @board = Array.new(height) { Array.new(width) {" "} }
     @hidden = {}
-    @over = false
+    @win = false
     createMines(num_mines)
     createNums
     createHidden
@@ -76,39 +79,45 @@ class Minesweeper
   end
 
   def step
-    until over
+    until over?
       display(true)
       get_move
-      won?
     end
     display(false)
-    puts "WINNER"
+    if @win
+      puts "CONGRATS, YOU WIN"
+    else
+      puts "GAME OVER"
+    end
   end
 
   def display(hide)
     system("clear")
     puts "MINES #{@num_mines}".colorize(:red)
+    if hide 
+      puts "HIDDEN TILES #{@hidden.values.count {|x| x}}"
+    else
+      puts "HIDDEN TILES 0"
+    end
+    puts
     print "  "
     0.upto(width-1) do |i|
-      print i.to_s.colorize(:yellow)
-      print " " if i < width
+      print "#{i} ".colorize(Y_COLOR)
     end
     puts
 
     board.each_with_index do |row, i|
-      print i.to_s.colorize(:light_yellow) + " "
+      print "#{i} ".colorize(X_COLOR)
       row.each_with_index do |el, j|
         if hide
           if hidden[i.to_s + " " + j.to_s]
-            print " "
+            print "  "
           else
-            print el.to_s.colorize(COLORS[el])
+            print "#{el} ".colorize(COLORS[el])
           end
         else
-          print el.to_s.colorize(COLORS[el])
+          print "#{el} ".colorize(COLORS[el])
         end
-
-        print " " if j < row.length
       end
       puts
     end
@@ -116,7 +125,7 @@ class Minesweeper
   end
 
   def get_move
-    print "Input your move in " + "x".colorize(:light_yellow) + "," + "y".colorize(:yellow) + " format: "
+    print "Input your move in " + "x".colorize(X_COLOR) + "," + "y".colorize(Y_COLOR) + " format: "
     pos = gets.chomp.split(",")
 
     if pos.length != 2 || pos[0].to_i < 0 || pos[0].to_i > width-1 || pos[1].to_i < 0 || pos[1].to_i > height-1
@@ -130,28 +139,19 @@ class Minesweeper
   def move(pos)
     x = pos[0].to_i
     y = pos[1].to_i
-    if board[x][y] == "X"
-      game_over
-    end
     @hidden[x.to_s + " " + y.to_s] = false if board[x][y] != "0"
     show_adjacents(pos) if board[x][y] == "0"
   end
 
-  def game_over
-    display(false)
-    puts "GAME OVER"
-    @over = true
-  end
-
-  def won?
+  def over?
     0.upto(width-1) do |i|
       0.upto(height-1) do |j|
-        if hidden[i.to_s + " " + j.to_s] && board[i][j] != "X"
-          return false
-        end
+        return true if hidden[i.to_s + " " + j.to_s] == false && board[i][j] == "X"
+        return false if hidden[i.to_s + " " + j.to_s] && board[i][j] != "X"
       end
     end
-    @over = true
+    @win = true
+    true
   end
 
   def show_adjacents(pos)
