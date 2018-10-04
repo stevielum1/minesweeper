@@ -178,22 +178,6 @@ class Minesweeper
 end
 
 if __FILE__ == $PROGRAM_NAME
-  # puts "black".colorize(:black)
-  # puts "light_black".colorize(:light_black)
-  # puts "red".colorize(:red)
-  # puts "light_red".colorize(:light_red)
-  # puts "green".colorize(:green)
-  # puts "light_green".colorize(:light_green)
-  # puts "yellow".colorize(:yellow)
-  # puts "light_yellow".colorize(:light_yellow)
-  # puts "blue".colorize(:blue)
-  # puts "light_blue".colorize(:light_blue)
-  # puts "magenta".colorize(:magenta)
-  # puts "light_magenta".colorize(:light_magenta)
-  # puts "cyan".colorize(:cyan)
-  # puts "light_cyan".colorize(:light_cyan)
-  # puts "white".colorize(:white)
-  # puts "light_white".colorize(:light_white)
   puts "WELCOME TO MINESWEEPER"
   puts "BOARD SIZE IS 10 X 10"
   print "HOW MANY MINES? (10 easy, 15 medium, 20 hard):  "
