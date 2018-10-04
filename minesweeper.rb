@@ -182,7 +182,7 @@ end
 if __FILE__ == $PROGRAM_NAME
   puts "WELCOME TO MINESWEEPER"
   puts "BOARD SIZE IS 10 X 10"
-  print "HOW MANY MINES? (10 easy, 15 medium, 20 hard):  "
+  print "HOW MANY MINES? (10 easy, 15 medium, 20 hard): "
   mines = gets.chomp.to_i
   m = Minesweeper.new(10, 10, mines)
   m.step
