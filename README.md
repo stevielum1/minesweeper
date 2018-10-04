@@ -7,7 +7,8 @@ This is a console based minesweeper. You must uncover each tile that does not co
 ### Installation
 Run the following commands in your terminal:
 1. `git clone https://github.com/stevielum1/minesweeper.git`
-2. `gem install colorize`
-3. `ruby minesweeper.rb`
+2. `cd minesweeper`
+3. `gem install colorize`
+4. `ruby minesweeper.rb`
 
 Now go have fun!
