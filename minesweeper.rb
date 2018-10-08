@@ -85,9 +85,9 @@ class Minesweeper
     end
     display(false)
     if @win
-      puts "CONGRATS, YOU WIN"
+      puts "\nCONGRATS, YOU WIN".colorize(:yellow)
     else
-      puts "GAME OVER"
+      puts "\nGAME OVER".colorize(:red)
     end
   end
 
